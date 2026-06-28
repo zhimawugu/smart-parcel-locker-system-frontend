@@ -1,0 +1,52 @@
+:root { --brand: #2563eb; }
+
+body { background: #eef1f6; }
+
+.hidden { display: none !important; }
+
+.btn-primary {
+    --bs-btn-bg: var(--brand);
+    --bs-btn-border-color: var(--brand);
+    --bs-btn-hover-bg: #1d4ed8;
+    --bs-btn-hover-border-color: #1d4ed8;
+}
+.btn-outline-primary {
+    --bs-btn-color: var(--brand);
+    --bs-btn-border-color: var(--brand);
+    --bs-btn-hover-bg: var(--brand);
+    --bs-btn-hover-border-color: var(--brand);
+}
+
+.logo { font-size: 34px; }
+.brand { font-weight: 700; }
+.sub { font-size: 12px; color: #6b7280; }
+
+.auth { max-width: 380px; margin: 40px auto; padding: 0 16px; }
+.machine { max-width: 540px; margin: 24px auto; padding: 0 16px; }
+.page { max-width: 760px; margin: 24px auto; padding: 0 16px; }
+
+.bar { position: relative; background: #fff; border-bottom: 1px solid #e5e7eb; padding: 10px; text-align: center; }
+.bar .title { font-weight: 700; }
+.bar .left { position: absolute; left: 12px; top: 12px; }
+.bar .right { position: absolute; right: 12px; top: 12px; }
+.back-fixed { position: absolute; left: 16px; top: 16px; }
+
+.seg { display: flex; gap: 8px; }
+.seg button { flex: 1; padding: 9px; border: 1px solid #dee2e6; background: #fff; border-radius: 8px; color: #6b7280; cursor: pointer; }
+.seg button.active { border-color: var(--brand); color: var(--brand); font-weight: 600; }
+
+.size-card { border: 2px solid #e5e7eb; border-radius: 12px; padding: 18px; text-align: center; cursor: pointer; background: #fff; }
+.size-card.active { border-color: var(--brand); }
+.size-card.active .size-name { color: var(--brand); }
+.size-card .box-ico { font-size: 26px; }
+.size-card .size-name { font-weight: 700; }
+.size-card .size-free { color: var(--brand); font-size: 12px; font-weight: 600; }
+.size-card.soldout { opacity: .55; }
+
+.locker-box { border: 1px solid var(--brand); border-radius: 12px; padding: 16px; }
+.locker-box .label { color: var(--brand); font-size: 12px; font-weight: 700; letter-spacing: 1px; }
+.locker-box .code { font-size: 46px; font-weight: 800; color: var(--brand); }
+
+.check { width: 64px; height: 64px; border-radius: 50%; background: #16a34a; color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+
+.machine-card .hg-button { height: 42px; }

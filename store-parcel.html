@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parcel Locker — Store a Parcel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="bar">
+        <a class="btn btn-light btn-sm left" href="delivery-home.html">‹ Back</a>
+        <div class="title">📦 Smart Parcel Locker</div>
+        <div class="sub">Locker Machine · <select id="station-select"></select></div>
+        <button class="btn btn-light btn-sm right" id="logout-btn">Log Out</button>
+    </div>
+
+    <div class="page">
+
+        <section id="size-view">
+            <h1 class="h3 text-center">Store a Parcel</h1>
+            <p class="text-muted text-center">Step 1 of 2 · Choose the parcel size to assign a locker</p>
+
+            <label class="form-label mt-2">Recipient Email</label>
+            <input class="form-control" type="email" id="recipient" placeholder="resident@example.com">
+
+            <label class="form-label mt-3">Parcel size</label>
+            <div class="row g-3" id="size-grid">
+                <div class="col-4">
+                    <div class="size-card" data-size="SMALL">
+                        <div class="box-ico">📦</div>
+                        <div class="size-name">Small</div>
+                        <div class="text-muted small">30 × 20 × 10 cm</div>
+                        <div class="size-free" data-free="SMALL">—</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="size-card" data-size="MEDIUM">
+                        <div class="box-ico">📦</div>
+                        <div class="size-name">Medium</div>
+                        <div class="text-muted small">45 × 35 × 25 cm</div>
+                        <div class="size-free" data-free="MEDIUM">—</div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="size-card" data-size="LARGE">
+                        <div class="box-ico">📦</div>
+                        <div class="size-name">Large</div>
+                        <div class="text-muted small">60 × 50 × 40 cm</div>
+                        <div class="size-free" data-free="LARGE">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary w-100 mt-4" id="assign-btn" disabled>Assign Locker</button>
+            <p class="text-muted text-center small mt-3">A locker of the selected size will open automatically.</p>
+            <p class="text-danger text-center hidden" id="store-msg"></p>
+        </section>
+
+        <section id="opened-view" class="hidden">
+            <div class="card mx-auto" style="max-width:440px;">
+                <div class="card-body text-center">
+                    <div class="check">✓</div>
+                    <h2 class="h4">Locker Opened</h2>
+                    <p class="text-muted">Place the parcel inside and close the door.</p>
+
+                    <div class="locker-box">
+                        <div class="label">ASSIGNED LOCKER</div>
+                        <div class="code" id="locker-code">—</div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <div><div class="sub">Size</div><div id="opened-size">—</div></div>
+                        <div><div class="sub">Recipient</div><div id="opened-recipient">—</div></div>
+                    </div>
+
+                    <p class="text-success mt-3 mb-0">✓ Collection code sent to recipient</p>
+                    <button class="btn btn-success w-100 mt-3" id="done-btn">Done</button>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/store.js"></script>
+</body>
+</html>
