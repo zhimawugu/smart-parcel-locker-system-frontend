@@ -11,6 +11,10 @@ $(function () {
         window.location.href = 'store-parcel.html';
     });
 
+    $('[data-action="collect"]').on('click', function () {
+        window.location.href = 'pickup-parcel.html';
+    });
+
     $('#logout-btn').on('click', function () {
         APP.logout('resident-home.html');
     });

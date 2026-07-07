@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Parcel Locker — Collect a Parcel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="bar">
+        <a class="btn btn-light btn-sm left" href="resident-home.html">‹ Back</a>
+        <div class="title">📦 Smart Parcel Locker</div>
+        <div class="sub">Locker Machine · Building A</div>
+    </div>
+
+    <div class="page">
+        <section id="code-view">
+            <div class="card mx-auto" style="max-width:480px;">
+                <div class="card-body text-center">
+                    <h1 class="h4">Enter Collection Code</h1>
+                    <p class="sub">To collect your parcel</p>
+
+                    <div class="code-display" id="code-display"></div>
+
+                    <div class="keypad" id="keypad">
+                        <button type="button" data-key="1">1</button>
+                        <button type="button" data-key="2">2</button>
+                        <button type="button" data-key="3">3</button>
+                        <button type="button" data-key="4">4</button>
+                        <button type="button" data-key="5">5</button>
+                        <button type="button" data-key="6">6</button>
+                        <button type="button" data-key="7">7</button>
+                        <button type="button" data-key="8">8</button>
+                        <button type="button" data-key="9">9</button>
+                        <button type="button" data-key="del">⌫</button>
+                        <button type="button" data-key="0">0</button>
+                        <button type="button" data-key="ok" class="ok">OK</button>
+                    </div>
+
+                    <p class="sub mt-3">Press OK to open your locker</p>
+                    <p class="text-danger hidden" id="collect-msg"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="opened-view" class="hidden">
+            <div class="card mx-auto" style="max-width:440px;">
+                <div class="card-body text-center">
+                    <div class="check">✓</div>
+                    <h2 class="h4">Locker Opened</h2>
+                    <p class="text-muted">Take your parcel and close the door.</p>
+
+                    <div class="locker-box">
+                        <div class="label">LOCKER</div>
+                        <div class="code" id="opened-locker">—</div>
+                    </div>
+
+                    <p class="sub mt-3">🔒 The door locks automatically once closed.</p>
+                    <button class="btn btn-success w-100 mt-3" id="done-btn">Done</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/keypad.js"></script>
+    <script src="js/collect-parcel.js"></script>
+</body>
+</html>

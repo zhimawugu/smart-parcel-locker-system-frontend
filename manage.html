@@ -3,29 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Parcel Locker — Store a Parcel</title>
+    <title>Smart Parcel Locker — Send a Parcel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="bar">
-        <a class="btn btn-light btn-sm left" href="delivery-home.html">‹ Back</a>
-        <div class="title">📦 Smart Parcel Locker</div>
-        <div class="sub">Locker Machine · <select id="station-select"></select></div>
-        <button class="btn btn-light btn-sm right" id="logout-btn">Log Out</button>
+    <div class="d-flex justify-content-between align-items-center bg-white border-bottom p-3">
+        <a class="brand text-decoration-none text-dark" href="home.html">📦 Smart Parcel Locker</a>
+        <div class="d-flex align-items-center gap-2">
+            <a class="btn btn-sm btn-light" href="my-parcels.html">My Parcels</a>
+            <a class="btn btn-sm btn-primary" href="manage.html">Send a Parcel</a>
+            <button class="btn btn-light btn-sm" id="logout-btn">Log Out</button>
+        </div>
     </div>
 
     <div class="page">
+        <section id="reserve-view">
+            <h1 class="h3">Send a Parcel</h1>
+            <p class="text-muted">Reserve a locker, then drop off at the machine.</p>
 
-        <section id="size-view">
-            <h1 class="h3 text-center">Store a Parcel</h1>
-            <p class="text-muted text-center">Step 1 of 2 · Choose the parcel size to assign a locker</p>
-
-            <label class="form-label mt-2">Recipient Email</label>
-            <input class="form-control" type="email" id="recipient" placeholder="resident@example.com">
-
-            <label class="form-label mt-3">Carrier</label>
-            <input class="form-control" type="text" id="carrier" placeholder="DHL">
+            <label class="form-label mt-2">Carrier / Destination</label>
+            <input class="form-control" type="text" id="carrier" placeholder="An Post — Drop-off, Dublin 2">
 
             <label class="form-label mt-3">Parcel size</label>
             <div class="row g-3" id="size-grid">
@@ -55,38 +53,36 @@
                 </div>
             </div>
 
-            <button class="btn btn-primary w-100 mt-4" id="assign-btn" disabled>Assign Locker</button>
-            <p class="text-muted text-center small mt-3">A locker of the selected size will open automatically.</p>
-            <p class="text-danger text-center hidden" id="store-msg"></p>
+            <button class="btn btn-primary w-100 mt-4" id="reserve-btn" disabled>Reserve Locker</button>
+            <p class="text-muted text-center small mt-3">You'll receive a reservation code to enter at the locker machine.</p>
+            <p class="text-danger text-center hidden" id="reserve-msg"></p>
         </section>
 
-        <section id="opened-view" class="hidden">
+        <section id="confirmed-view" class="hidden">
             <div class="card mx-auto" style="max-width:440px;">
                 <div class="card-body text-center">
                     <div class="check">✓</div>
-                    <h2 class="h4">Locker Opened</h2>
-                    <p class="text-muted">Place the parcel inside and close the door.</p>
+                    <h2 class="h4">Reservation Confirmed</h2>
+                    <p class="text-muted">Enter this code at the locker machine to open your locker.</p>
 
                     <div class="locker-box">
-                        <div class="label">ASSIGNED LOCKER</div>
-                        <div class="code" id="locker-code">—</div>
+                        <div class="label">RESERVATION CODE</div>
+                        <div class="code" id="res-code">—</div>
                     </div>
 
                     <div class="d-flex justify-content-between mt-3">
-                        <div><div class="sub">Size</div><div id="opened-size">—</div></div>
-                        <div><div class="sub">Recipient</div><div id="opened-recipient">—</div></div>
+                        <div><div class="sub">Locker</div><div id="res-locker">—</div></div>
+                        <div><div class="sub">Size</div><div id="res-size">—</div></div>
                     </div>
 
-                    <p class="text-success mt-3 mb-0">✓ Collection code sent to recipient</p>
-                    <button class="btn btn-success w-100 mt-3" id="done-btn">Done</button>
+                    <button class="btn btn-success w-100 mt-3" id="reserve-done-btn">Done</button>
                 </div>
             </div>
         </section>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/store.js"></script>
+    <script src="js/manage.js"></script>
 </body>
 </html>

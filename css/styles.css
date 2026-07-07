@@ -50,3 +50,15 @@ body { background: #eef1f6; }
 .check { width: 64px; height: 64px; border-radius: 50%; background: #16a34a; color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
 
 .machine-card .hg-button { height: 42px; }
+
+.code-display { min-height: 58px; font-size: 34px; font-weight: 800; letter-spacing: 8px; color: var(--brand); background: #f8fafc; border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px; margin-top: 12px; }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 320px; margin: 16px auto 0; }
+.keypad button { padding: 16px 0; font-size: 20px; font-weight: 600; border: 1px solid #dee2e6; background: #fff; border-radius: 10px; cursor: pointer; }
+.keypad button.ok { background: #16a34a; border-color: #16a34a; color: #fff; }
+
+.parcel-row { display: flex; align-items: center; gap: 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+.parcel-ico { font-size: 22px; }
+.parcel-main { flex: 1; }
+.parcel-title { font-weight: 700; }
+.parcel-sub { color: #6b7280; font-size: 13px; }
+.pill-ready { background: #dcfce7; color: #16a34a; font-weight: 600; font-size: 12px; padding: 4px 12px; border-radius: 999px; white-space: nowrap; }

@@ -21,7 +21,7 @@ $(function () {
         $('#login-btn').prop('disabled', true).text('Signing in…');
         APP.api('POST', '/api/auth/login', { email: email, password: password })
             .done(function (user) {
-                if (user.role !== 'RESIDENT' && user.role !== 'PROPERTY_MANAGER') {
+                if (user.role !== 'RESIDENT' && user.role !== 'PROPERTY_MANAGER' && user.role !== 'DELIVERY_STAFF') {
                     showError('This account must sign in at the locker machine.');
                     $('#login-btn').prop('disabled', false).text('Log In');
                     return;

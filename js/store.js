@@ -56,7 +56,7 @@ $(function () {
     }
 
     function refreshAssignState() {
-        var ready = selectedSize && $.trim($('#recipient').val()) && currentStationId();
+        var ready = selectedSize && $.trim($('#recipient').val()) && $.trim($('#carrier').val()) && currentStationId();
         $('#assign-btn').prop('disabled', !ready);
     }
 
@@ -75,17 +75,20 @@ $(function () {
     });
 
     $('#recipient').on('input', refreshAssignState);
+    $('#carrier').on('input', refreshAssignState);
 
     $('#assign-btn').on('click', function () {
         clearError();
         var recipient = $.trim($('#recipient').val());
-        if (!recipient || !selectedSize) { return; }
+        var carrier = $.trim($('#carrier').val());
+        if (!recipient || !carrier || !selectedSize) { return; }
 
         $('#assign-btn').prop('disabled', true).text('Opening locker…');
         APP.api('POST', '/api/parcels/open', {
             stationId: Number(currentStationId()),
             recipientEmail: recipient,
-            size: selectedSize
+            size: selectedSize,
+            carrier: carrier
         })
             .done(function (res) {
                 openedParcelId = res.parcelId;
@@ -116,6 +119,7 @@ $(function () {
         openedParcelId = null;
         selectedSize = null;
         $('#recipient').val('');
+        $('#carrier').val('');
         $('.size-card').removeClass('active');
         $('#done-btn').prop('disabled', false).text('Done');
         $('#assign-btn').text('Assign Locker');

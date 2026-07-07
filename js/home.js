@@ -1,6 +1,6 @@
 $(function () {
-    var user = APP.requireLogin();
-    if (!user) { return; }
+    var user = APP.getUser();
+    if (!user) { window.location.href = 'index.html'; return; }
 
     var roleLabels = {
         RESIDENT: 'Resident',
@@ -14,9 +14,15 @@ $(function () {
 
     if (APP.isStaff(user.role)) {
         $('#staff-tile').removeClass('hidden');
-    } else {
-
     }
 
-    $('#logout-btn').on('click', APP.logout);
+    if (user.role === 'DELIVERY_STAFF') {
+        $('#courier-tile').removeClass('hidden');
+    }
+
+    if (user.role === 'RESIDENT') {
+        $('#resident-tiles').removeClass('hidden');
+    }
+
+    $('#logout-btn').on('click', function () { APP.logout(); });
 });
