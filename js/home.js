@@ -20,6 +20,10 @@ $(function () {
         $('#courier-tile').removeClass('hidden');
     }
 
+    if (user.role === 'PROPERTY_MANAGER') {
+        $('#manager-tile').removeClass('hidden');
+    }
+
     if (user.role === 'RESIDENT') {
         $('#resident-tiles').removeClass('hidden');
     }

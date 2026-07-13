@@ -93,5 +93,87 @@ $(function () {
         loadAvailability();
     });
 
+    var extendDeadlineIso = null;
+    var extendDays = null;
+
+    function formatDeadline(iso) {
+        var d = new Date(iso);
+        var date = d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+        var time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        return date + ', ' + time;
+    }
+    function daysLeft(iso) {
+        return Math.max(0, Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000));
+    }
+    function expiresText(iso) {
+        var n = daysLeft(iso);
+        return 'Expires in ' + n + (n === 1 ? ' day' : ' days');
+    }
+    function showExtendMsg(text, ok) {
+        $('#extend-msg').text(text).removeClass('hidden text-danger text-success')
+            .addClass(ok ? 'text-success' : 'text-danger');
+    }
+    function resetExtend() {
+        $('#deadline-box').addClass('hidden');
+        $('#extend-seg button').removeClass('active');
+        $('#new-deadline').text('—');
+        $('#extend-btn').prop('disabled', true).text('Extend Deadline');
+        extendDeadlineIso = null;
+        extendDays = null;
+    }
+
+    $('#extend-code').on('input', function () {
+        $('#extend-msg').addClass('hidden');
+        var code = $.trim($(this).val());
+        if (code.length !== 6) { resetExtend(); return; }
+        APP.api('GET', '/api/parcels/deadline?collectionCode=' + encodeURIComponent(code))
+            .done(function (res) {
+                extendDeadlineIso = res.deadline;
+                extendDays = null;
+                $('#current-deadline').text(formatDeadline(res.deadline));
+                $('#expires-pill').text(expiresText(res.deadline));
+                $('#extend-seg button').removeClass('active');
+                $('#new-deadline').text('—');
+                $('#extend-btn').prop('disabled', true).text('Extend Deadline');
+                $('#deadline-box').removeClass('hidden');
+                if (res.extended) {
+                    $('#extend-controls').addClass('hidden');
+                    showExtendMsg('This parcel has already been extended once.', false);
+                } else {
+                    $('#extend-controls').removeClass('hidden');
+                }
+            })
+            .fail(function (msg) { resetExtend(); showExtendMsg(msg, false); });
+    });
+
+    $('#extend-seg').on('click', 'button', function () {
+        if (!extendDeadlineIso) { return; }
+        $('#extend-seg button').removeClass('active');
+        $(this).addClass('active');
+        extendDays = Number($(this).data('days'));
+        var nd = new Date(extendDeadlineIso);
+        nd.setDate(nd.getDate() + extendDays);
+        $('#new-deadline').text(formatDeadline(nd.toISOString()));
+        $('#extend-btn').prop('disabled', false);
+    });
+
+    $('#extend-btn').on('click', function () {
+        if (!extendDays) { return; }
+        var code = $.trim($('#extend-code').val());
+        $('#extend-btn').prop('disabled', true).text('Extending…');
+        APP.api('POST', '/api/parcels/extend', { collectionCode: code, days: extendDays })
+            .done(function (res) {
+                extendDeadlineIso = res.deadline;
+                $('#current-deadline').text(formatDeadline(res.deadline));
+                $('#expires-pill').text(expiresText(res.deadline));
+                $('#extend-controls').addClass('hidden');
+                showExtendMsg('Deadline extended to ' + formatDeadline(res.deadline) + '.', true);
+            })
+            .fail(function (msg) {
+                showExtendMsg(msg, false);
+                $('#extend-btn').prop('disabled', false).text('Extend Deadline');
+            });
+    });
+
     loadStations();
 });
