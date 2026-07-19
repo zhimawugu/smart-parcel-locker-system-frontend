@@ -98,8 +98,8 @@ $(function () {
 
     function formatDeadline(iso) {
         var d = new Date(iso);
-        var date = d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
-        var time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        var date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        var time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
         return date + ', ' + time;
     }
     function daysLeft(iso) {

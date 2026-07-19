@@ -27,7 +27,7 @@ $(function () {
                     return;
                 }
                 APP.setUser(user);
-                window.location.href = 'home.html';
+                window.location.href = user.role === 'DELIVERY_STAFF' ? 'courier-parcels.html' : 'home.html';
             })
             .fail(function (msg) {
                 showError(msg || 'Invalid email or password.');

@@ -12,7 +12,7 @@ $(function () {
     $('#hello').text('Hi, ' + (user.fullName || user.email));
     $('#role-badge').text(roleLabels[user.role] || user.role);
 
-    if (APP.isStaff(user.role)) {
+    if (APP.isStaff(user.role) && user.role !== 'DELIVERY_STAFF') {
         $('#staff-tile').removeClass('hidden');
     }
 

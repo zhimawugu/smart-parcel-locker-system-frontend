@@ -8,8 +8,8 @@ $(function () {
 
     function formatDeadline(iso) {
         var d = new Date(iso);
-        var date = d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
-        var time = d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        var date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        var time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
         return date + ', ' + time;
     }
 
@@ -23,6 +23,9 @@ $(function () {
             parcels.forEach(function (p) {
                 var $main = $('<div class="parcel-main">');
                 $main.append($('<div class="parcel-title">').text(p.carrier + ' · ' + titleCase(p.size) + ' box'));
+                if (p.orderNumber) {
+                    $main.append($('<div class="parcel-sub">').text('Order ' + p.orderNumber));
+                }
                 $main.append($('<div class="parcel-sub">').text(
                     'Locker ' + p.lockerCode + ' · Code ' + p.collectionCode + ' · Expires ' + formatDeadline(p.deadline)
                 ));

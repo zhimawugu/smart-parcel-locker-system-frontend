@@ -56,7 +56,7 @@ $(function () {
     }
 
     function refreshAssignState() {
-        var ready = selectedSize && $.trim($('#recipient').val()) && $.trim($('#carrier').val()) && currentStationId();
+        var ready = selectedSize && $.trim($('#recipient').val()) && $.trim($('#carrier').val()) && $.trim($('#order-number').val()) && currentStationId();
         $('#assign-btn').prop('disabled', !ready);
     }
 
@@ -76,27 +76,32 @@ $(function () {
 
     $('#recipient').on('input', refreshAssignState);
     $('#carrier').on('input', refreshAssignState);
+    $('#order-number').on('input', refreshAssignState);
 
     $('#assign-btn').on('click', function () {
         clearError();
         var recipient = $.trim($('#recipient').val());
         var carrier = $.trim($('#carrier').val());
-        if (!recipient || !carrier || !selectedSize) { return; }
+        var orderNumber = $.trim($('#order-number').val());
+        if (!recipient || !carrier || !orderNumber || !selectedSize) { return; }
 
         $('#assign-btn').prop('disabled', true).text('Opening locker…');
         APP.api('POST', '/api/parcels/open', {
             stationId: Number(currentStationId()),
             recipientEmail: recipient,
             size: selectedSize,
-            carrier: carrier
+            carrier: carrier,
+            orderNumber: orderNumber
         })
             .done(function (res) {
                 openedParcelId = res.parcelId;
                 $('#locker-code').text(res.lockerCode);
                 $('#opened-size').text(titleCase(selectedSize));
                 $('#opened-recipient').text(recipient);
+                $('#opened-order').text(orderNumber);
                 $('#size-view').addClass('hidden');
                 $('#opened-view').removeClass('hidden');
+                $('#kb-panel').addClass('hidden');
             })
             .fail(function (msg) {
                 showError(msg);
@@ -120,11 +125,13 @@ $(function () {
         selectedSize = null;
         $('#recipient').val('');
         $('#carrier').val('');
+        $('#order-number').val('');
         $('.size-card').removeClass('active');
         $('#done-btn').prop('disabled', false).text('Done');
         $('#assign-btn').text('Assign Locker');
         $('#opened-view').addClass('hidden');
         $('#size-view').removeClass('hidden');
+        $('#kb-panel').removeClass('hidden');
         refreshAssignState();
         loadAvailability();
     }
@@ -135,6 +142,48 @@ $(function () {
 
     $('#logout-btn').on('click', function () {
         APP.logout('resident-home.html');
+    });
+
+    var Keyboard = window.SimpleKeyboard.default;
+    var activeField = null;
+    var kbLayout = {
+        default: [
+            '1 2 3 4 5 6 7 8 9 0',
+            'q w e r t y u i o p',
+            'a s d f g h j k l',
+            '{shift} z x c v b n m {bksp}',
+            '@ . _ - {space}'
+        ],
+        shift: [
+            '1 2 3 4 5 6 7 8 9 0',
+            'Q W E R T Y U I O P',
+            'A S D F G H J K L',
+            '{shift} Z X C V B N M {bksp}',
+            '@ . _ - {space}'
+        ]
+    };
+    var keyboard = new Keyboard({
+        layout: kbLayout,
+        display: { '{bksp}': '⌫', '{shift}': '⇧', '{space}': 'space' },
+        onChange: function (input) {
+            if (activeField) { $(activeField).val(input).trigger('input'); }
+        },
+        onKeyPress: function (button) {
+            if (button === '{shift}') {
+                var current = keyboard.options.layoutName;
+                keyboard.setOptions({ layoutName: current === 'default' ? 'shift' : 'default' });
+            }
+        }
+    });
+    $('.form-control').on('focus', function () {
+        activeField = this;
+        keyboard.setOptions({ inputName: this.id });
+        keyboard.setInput(this.value, this.id);
+    });
+    $('.form-control').on('input', function () {
+        if (activeField === this) {
+            keyboard.setInput(this.value, this.id);
+        }
     });
 
     loadStations();
