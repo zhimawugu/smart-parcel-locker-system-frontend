@@ -1,5 +1,5 @@
 window.APP = (function () {
-    var API_BASE = 'http://localhost:8080';
+    var API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? 'http://localhost:8080' : '';
     var KEY = 'spl_user';
 
     function api(method, path, body) {
