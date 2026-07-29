@@ -21,6 +21,12 @@ window.APP = (function () {
         setUser: function (u) { sessionStorage.setItem(KEY, JSON.stringify(u)); },
         getUser: function () { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); },
         logout: function (dest) { sessionStorage.removeItem(KEY); window.location.href = dest || 'index.html'; },
-        isStaff: function (role) { return role === 'DELIVERY_STAFF' || role === 'LOCKER_STAFF'; }
+        isStaff: function (role) { return role === 'DELIVERY_STAFF' || role === 'LOCKER_STAFF'; },
+        requireRole: function (roles) {
+            var user = this.getUser();
+            if (!user) { window.location.href = 'index.html'; return null; }
+            if ([].concat(roles).indexOf(user.role) < 0) { window.location.href = 'home.html'; return null; }
+            return user;
+        }
     };
 })();

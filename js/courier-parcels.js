@@ -1,6 +1,6 @@
 $(function () {
-    var user = APP.getUser();
-    if (!user) { window.location.href = 'index.html'; return; }
+    var user = APP.requireRole('DELIVERY_STAFF');
+    if (!user) { return; }
 
     $('#logout-btn').on('click', function () { APP.logout(); });
 

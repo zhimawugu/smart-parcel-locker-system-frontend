@@ -17,7 +17,7 @@
     </div>
 
     <div class="page" style="max-width:1040px;">
-        <div class="row g-4 align-items-center">
+        <div class="row g-4 align-items-center" id="store-view">
             <div class="col-lg-7">
                 <section id="size-view">
                     <h1 class="h3">Store a Parcel</h1>
@@ -64,36 +64,36 @@
                     <p class="text-muted text-center small mt-3">A locker of the selected size will open automatically.</p>
                     <p class="text-danger text-center hidden" id="store-msg"></p>
                 </section>
-
-                <section id="opened-view" class="hidden">
-                    <div class="card mx-auto" style="max-width:440px;">
-                        <div class="card-body text-center">
-                            <div class="check">✓</div>
-                            <h2 class="h4">Locker Opened</h2>
-                            <p class="text-muted">Place the parcel inside and close the door.</p>
-
-                            <div class="locker-box">
-                                <div class="label">ASSIGNED LOCKER</div>
-                                <div class="code" id="locker-code">—</div>
-                            </div>
-
-                            <div class="d-flex justify-content-between mt-3">
-                                <div><div class="sub">Size</div><div id="opened-size">—</div></div>
-                                <div><div class="sub">Recipient</div><div id="opened-recipient">—</div></div>
-                            </div>
-                            <div class="sub mt-2">Order <span id="opened-order">—</span></div>
-
-                            <p class="text-success mt-3 mb-0">✓ Collection code sent to recipient</p>
-                            <button class="btn btn-success w-100 mt-3" id="done-btn">Done</button>
-                        </div>
-                    </div>
-                </section>
             </div>
 
             <div class="col-lg-5" id="kb-panel">
                 <div class="simple-keyboard"></div>
             </div>
         </div>
+
+        <section id="opened-view" class="hidden">
+            <div class="card mx-auto" style="max-width:440px;">
+                <div class="card-body text-center">
+                    <div class="check">✓</div>
+                    <h2 class="h4">Locker Opened</h2>
+                    <p class="text-muted">Place the parcel inside and close the door.</p>
+
+                    <div class="locker-box">
+                        <div class="label">ASSIGNED LOCKER</div>
+                        <div class="code" id="locker-code">—</div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <div><div class="sub">Size</div><div id="opened-size">—</div></div>
+                        <div><div class="sub">Recipient</div><div id="opened-recipient">—</div></div>
+                    </div>
+                    <div class="sub mt-2">Order <span id="opened-order">—</span></div>
+
+                    <p class="text-success mt-3 mb-0">✓ Collection code sent to recipient</p>
+                    <button class="btn btn-success w-100 mt-3" id="done-btn">Done</button>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

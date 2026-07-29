@@ -99,9 +99,8 @@ $(function () {
                 $('#opened-size').text(titleCase(selectedSize));
                 $('#opened-recipient').text(recipient);
                 $('#opened-order').text(orderNumber);
-                $('#size-view').addClass('hidden');
+                $('#store-view').addClass('hidden');
                 $('#opened-view').removeClass('hidden');
-                $('#kb-panel').addClass('hidden');
             })
             .fail(function (msg) {
                 showError(msg);
@@ -130,8 +129,7 @@ $(function () {
         $('#done-btn').prop('disabled', false).text('Done');
         $('#assign-btn').text('Assign Locker');
         $('#opened-view').addClass('hidden');
-        $('#size-view').removeClass('hidden');
-        $('#kb-panel').removeClass('hidden');
+        $('#store-view').removeClass('hidden');
         refreshAssignState();
         loadAvailability();
     }
