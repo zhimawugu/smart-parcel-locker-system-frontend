@@ -9,17 +9,21 @@ $(function () {
     var openedParcelId = null;
     var SIZES = ['SMALL', 'MEDIUM', 'LARGE'];
 
+    // show an error message
     function showError(text) {
         $('#store-msg').text(text).removeClass('hidden');
     }
+    // hide the error message
     function clearError() {
         $('#store-msg').addClass('hidden').text('');
     }
 
+    // currently selected station id
     function currentStationId() {
         return $('#station-select').val();
     }
 
+    // load stations into the dropdown
     function loadStations() {
         APP.api('GET', '/api/stations')
             .done(function (stations) {
@@ -37,6 +41,7 @@ $(function () {
             .fail(function (msg) { showError(msg); });
     }
 
+    // count free lockers per size for the station
     function loadAvailability() {
         var stationId = currentStationId();
         if (!stationId) { return; }
@@ -55,17 +60,20 @@ $(function () {
             .fail(function (msg) { showError(msg); });
     }
 
+    // enable Assign button when the form is ready
     function refreshAssignState() {
         var ready = selectedSize && $.trim($('#recipient').val()) && $.trim($('#carrier').val()) && $.trim($('#order-number').val()) && currentStationId();
         $('#assign-btn').prop('disabled', !ready);
     }
 
+    // reload availability when the station changes
     $('#station-select').on('change', function () {
         clearError();
         loadAvailability();
         refreshAssignState();
     });
 
+    // select a locker size
     $('#size-grid').on('click', '.size-card', function () {
         $('.size-card').removeClass('active');
         $(this).addClass('active');
@@ -78,6 +86,7 @@ $(function () {
     $('#carrier').on('input', refreshAssignState);
     $('#order-number').on('input', refreshAssignState);
 
+    // open a locker and store the parcel
     $('#assign-btn').on('click', function () {
         clearError();
         var recipient = $.trim($('#recipient').val());
@@ -108,6 +117,7 @@ $(function () {
             });
     });
 
+    // close the locker and finish
     $('#done-btn').on('click', function () {
         if (!openedParcelId) { return; }
         $('#done-btn').prop('disabled', true).text('Saving…');
@@ -119,6 +129,7 @@ $(function () {
             });
     });
 
+    // reset the form back to the start
     function resetToStart() {
         openedParcelId = null;
         selectedSize = null;
@@ -134,10 +145,12 @@ $(function () {
         loadAvailability();
     }
 
+    // capitalize the first letter only
     function titleCase(s) {
         return s.charAt(0) + s.slice(1).toLowerCase();
     }
 
+    // log out
     $('#logout-btn').on('click', function () {
         APP.logout('resident-home.html');
     });

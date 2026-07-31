@@ -2,16 +2,21 @@ $(function () {
     var user = APP.requireRole('RESIDENT');
     if (!user) { return; }
 
+    // log out
     $('#logout-btn').on('click', function () { APP.logout(); });
 
     var selectedSize = null;
     var stationId = null;
     var SIZES = ['SMALL', 'MEDIUM', 'LARGE'];
 
+    // show an error message
     function showError(text) { $('#reserve-msg').text(text).removeClass('hidden'); }
+    // hide the error message
     function clearError() { $('#reserve-msg').addClass('hidden').text(''); }
+    // capitalize the first letter only
     function titleCase(s) { return s.charAt(0) + s.slice(1).toLowerCase(); }
 
+    // load the first station and its availability
     function loadStations() {
         APP.api('GET', '/api/stations')
             .done(function (stations) {
@@ -25,6 +30,7 @@ $(function () {
             .fail(function (msg) { showError(msg); });
     }
 
+    // count free lockers per size for the station
     function loadAvailability() {
         if (!stationId) { return; }
         APP.api('GET', '/api/stations/' + stationId + '/lockers/available')
@@ -42,11 +48,13 @@ $(function () {
             .fail(function (msg) { showError(msg); });
     }
 
+    // enable Reserve button when the form is ready
     function refreshReserveState() {
         var ready = selectedSize && $.trim($('#carrier').val()) && stationId;
         $('#reserve-btn').prop('disabled', !ready);
     }
 
+    // select a locker size
     $('#size-grid').on('click', '.size-card', function () {
         $('.size-card').removeClass('active');
         $(this).addClass('active');
@@ -57,6 +65,7 @@ $(function () {
 
     $('#carrier').on('input', refreshReserveState);
 
+    // reserve a locker for the resident
     $('#reserve-btn').on('click', function () {
         clearError();
         var carrier = $.trim($('#carrier').val());
@@ -82,6 +91,7 @@ $(function () {
             });
     });
 
+    // reset the form after a reservation
     $('#reserve-done-btn').on('click', function () {
         selectedSize = null;
         $('#carrier').val('');
@@ -96,23 +106,28 @@ $(function () {
     var extendDeadlineIso = null;
     var extendDays = null;
 
+    // format a deadline for display
     function formatDeadline(iso) {
         var d = new Date(iso);
         var date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
         var time = d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
         return date + ', ' + time;
     }
+    // days remaining until the deadline
     function daysLeft(iso) {
         return Math.max(0, Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000));
     }
+    // build "Expires in N days" text
     function expiresText(iso) {
         var n = daysLeft(iso);
         return 'Expires in ' + n + (n === 1 ? ' day' : ' days');
     }
+    // show extend status message
     function showExtendMsg(text, ok) {
         $('#extend-msg').text(text).removeClass('hidden text-danger text-success')
             .addClass(ok ? 'text-success' : 'text-danger');
     }
+    // reset the extend deadline section
     function resetExtend() {
         $('#deadline-box').addClass('hidden');
         $('#extend-seg button').removeClass('active');
@@ -122,6 +137,7 @@ $(function () {
         extendDays = null;
     }
 
+    // look up parcel deadline by collection code
     $('#extend-code').on('input', function () {
         $('#extend-msg').addClass('hidden');
         var code = $.trim($(this).val());
@@ -146,6 +162,7 @@ $(function () {
             .fail(function (msg) { resetExtend(); showExtendMsg(msg, false); });
     });
 
+    // preview the new deadline for the chosen days
     $('#extend-seg').on('click', 'button', function () {
         if (!extendDeadlineIso) { return; }
         $('#extend-seg button').removeClass('active');
@@ -157,6 +174,7 @@ $(function () {
         $('#extend-btn').prop('disabled', false);
     });
 
+    // submit the deadline extension
     $('#extend-btn').on('click', function () {
         if (!extendDays) { return; }
         var code = $.trim($('#extend-code').val());

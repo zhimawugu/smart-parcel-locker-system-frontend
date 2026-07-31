@@ -33,12 +33,14 @@ $(function () {
         }
     });
 
+    // Attach the on-screen keyboard to the focused field
     $('.form-control').on('focus', function () {
         activeField = this;
         keyboard.setOptions({ inputName: this.id });
         keyboard.setInput(this.value, this.id);
     });
 
+    // Keep the on-screen keyboard in sync while typing
     $('.form-control').on('input', function () {
         if (activeField === this) {
             keyboard.setInput(this.value, this.id);
@@ -49,6 +51,7 @@ $(function () {
         $('#login-msg').text(text).removeClass('hidden');
     }
 
+    // Validate input and log in the staff user
     $('#login-form').on('submit', function (e) {
         e.preventDefault();
         var email = $.trim($('#email').val());

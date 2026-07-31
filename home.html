@@ -8,15 +8,18 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- top bar with logout -->
     <div class="d-flex justify-content-between align-items-center bg-white border-bottom p-3">
         <div class="brand">📦 Smart Parcel Locker</div>
         <button class="btn btn-light btn-sm" id="logout-btn">Log Out</button>
     </div>
 
+    <!-- welcome header and role badge -->
     <div class="page">
         <h1 class="h3" id="hello">Welcome</h1>
         <div class="text-primary fw-semibold" id="role-badge"></div>
 
+        <!-- staff: store a parcel tile -->
         <div class="card mt-3 hidden" id="staff-tile">
             <div class="card-body">
                 <h3 class="h5">Store a parcel</h3>
@@ -25,6 +28,7 @@
             </div>
         </div>
 
+        <!-- courier: pickups tile -->
         <div class="card mt-3 hidden" id="courier-tile">
             <div class="card-body">
                 <h3 class="h5">Parcels to pick up</h3>
@@ -33,6 +37,7 @@
             </div>
         </div>
 
+        <!-- manager: locker status tile -->
         <div class="card mt-3 hidden" id="manager-tile">
             <div class="card-body">
                 <h3 class="h5">Locker Status</h3>
@@ -41,6 +46,7 @@
             </div>
         </div>
 
+        <!-- resident: parcels, send, group tiles -->
         <div class="row g-3 mt-3 hidden" id="resident-tiles">
             <div class="col-md-6">
                 <div class="card">

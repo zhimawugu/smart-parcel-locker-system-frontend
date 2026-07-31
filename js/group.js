@@ -6,6 +6,7 @@ $(function () {
 
     var groupId = null;
 
+    // Show a status message in green or red
     function showMsg(text, ok) {
         $('#group-msg').text(text).removeClass('hidden text-danger text-success')
             .addClass(ok ? 'text-success' : 'text-danger');
@@ -14,6 +15,7 @@ $(function () {
     function reenable() { $('#invite-btn').prop('disabled', false).text('Send Invite'); }
     function initial(s) { return (s || '?').charAt(0).toUpperCase(); }
 
+    // Render the list of group members
     function renderMembers(group, canManage) {
         var members = (group && group.members) || [];
         $('#member-count').text(members.length);
@@ -44,6 +46,7 @@ $(function () {
         });
     }
 
+    // Load the current user's group from the server
     function load() {
         APP.api('GET', '/api/groups/mine?email=' + encodeURIComponent(user.email))
             .done(function (group) {
@@ -71,18 +74,21 @@ $(function () {
             .fail(function (msg) { showMsg(msg, false); });
     }
 
+    // Add a member to the group by email
     function addMember(email) {
         APP.api('POST', '/api/groups/' + groupId + '/members', { email: email })
             .done(function () { $('#invite-email').val(''); showMsg('Member added.', true); reenable(); load(); })
             .fail(function (msg) { showMsg(msg, false); reenable(); });
     }
 
+    // Remove a member from the group
     function removeMember(email) {
         APP.api('DELETE', '/api/groups/' + groupId + '/members?email=' + encodeURIComponent(email))
             .done(function () { load(); })
             .fail(function (msg) { showMsg(msg, false); });
     }
 
+    // Create the group if needed, then invite the member
     $('#invite-btn').on('click', function () {
         clearMsg();
         var email = $.trim($('#invite-email').val());

@@ -1,4 +1,5 @@
 $(function () {
+    // Show a status message (success or error)
     function show(text, ok) {
         $('#register-msg')
             .removeClass('hidden text-danger text-success')
@@ -6,6 +7,7 @@ $(function () {
             .text(text);
     }
 
+    // Validate inputs and submit registration
     $('#register-form').on('submit', function (e) {
         e.preventDefault();
         var fullName = $.trim($('#fullName').val());

@@ -3,13 +3,17 @@ $(function () {
     var openedParcelId = null;
     var pad;
 
+    // Show an error message
     function showError(text) { $('#collect-msg').text(text).removeClass('hidden'); }
+    // Hide the error message
     function clearError() { $('#collect-msg').addClass('hidden').text(''); }
 
+    // Load the locker station id
     APP.api('GET', '/api/stations').done(function (stations) {
         if (stations && stations.length) { stationId = stations[0].id; }
     });
 
+    // Submit collection code to open the locker
     pad = setupKeypad('#code-display', function (code) {
         if (!stationId) { showError('No locker station available.'); return; }
         clearError();
@@ -26,6 +30,7 @@ $(function () {
             });
     });
 
+    // Confirm collection and finish
     $('#done-btn').on('click', function () {
         if (!openedParcelId) { return; }
         $('#done-btn').prop('disabled', true).text('Saving…');

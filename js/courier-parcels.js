@@ -2,10 +2,13 @@ $(function () {
     var user = APP.requireRole('DELIVERY_STAFF');
     if (!user) { return; }
 
+    // Log out on button click
     $('#logout-btn').on('click', function () { APP.logout(); });
 
+    // Capitalize first letter, lowercase the rest
     function titleCase(s) { return s.charAt(0) + s.slice(1).toLowerCase(); }
 
+    // Load parcels assigned to this courier
     APP.api('GET', '/api/parcels/assigned?email=' + encodeURIComponent(user.email))
         .done(function (parcels) {
             var $list = $('#parcel-list').empty();

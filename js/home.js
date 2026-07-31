@@ -28,5 +28,6 @@ $(function () {
         $('#resident-tiles').removeClass('hidden');
     }
 
+    // Log the user out
     $('#logout-btn').on('click', function () { APP.logout(); });
 });

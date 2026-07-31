@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- top bar -->
     <div class="bar">
         <a class="btn btn-light btn-sm left" href="resident-home.html">‹ Back</a>
         <div class="title">📦 Smart Parcel Locker</div>
@@ -15,6 +16,7 @@
     </div>
 
     <div class="page">
+        <!-- reservation code entry view -->
         <section id="code-view">
             <div class="card mx-auto" style="max-width:480px;">
                 <div class="card-body text-center">
@@ -23,6 +25,7 @@
 
                     <div class="code-display" id="code-display"></div>
 
+                    <!-- number keypad -->
                     <div class="keypad" id="keypad">
                         <button type="button" data-key="1">1</button>
                         <button type="button" data-key="2">2</button>
@@ -44,6 +47,7 @@
             </div>
         </section>
 
+        <!-- locker opened confirmation view -->
         <section id="opened-view" class="hidden">
             <div class="card mx-auto" style="max-width:440px;">
                 <div class="card-body text-center">

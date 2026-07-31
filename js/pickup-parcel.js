@@ -11,6 +11,7 @@ $(function () {
     function clearError() { $('#pickup-msg').addClass('hidden').text(''); }
     function titleCase(s) { return s.charAt(0) + s.slice(1).toLowerCase(); }
 
+    // Load parcels assigned to this staff member
     function loadList() {
         clearError();
         APP.api('GET', '/api/parcels/assigned?email=' + encodeURIComponent(user.email))
@@ -38,6 +39,7 @@ $(function () {
             .fail(function (msg) { showError(msg); });
     }
 
+    // Open the locker for the selected parcel
     function openLocker(parcelId) {
         clearError();
         APP.api('POST', '/api/parcels/' + parcelId + '/pickup/open')
@@ -50,6 +52,7 @@ $(function () {
             .fail(function (msg) { showError(msg); });
     }
 
+    // Mark pickup complete and refresh the list
     $('#done-btn').on('click', function () {
         if (!openedParcelId) { return; }
         $('#done-btn').prop('disabled', true).text('Saving…');

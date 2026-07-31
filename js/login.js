@@ -1,13 +1,16 @@
 $(function () {
+    // Highlight the selected role button
     $('#role-seg').on('click', 'button', function () {
         $('#role-seg button').removeClass('active');
         $(this).addClass('active');
     });
 
+    // Show an error message
     function showError(text) {
         $('#login-msg').text(text).removeClass('hidden');
     }
 
+    // Validate inputs and submit login
     $('#login-form').on('submit', function (e) {
         e.preventDefault();
         var email = $.trim($('#email').val());

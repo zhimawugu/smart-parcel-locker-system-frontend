@@ -2,10 +2,13 @@ $(function () {
     var user = APP.requireRole('RESIDENT');
     if (!user) { return; }
 
+    // Log out on button click
     $('#logout-btn').on('click', function () { APP.logout(); });
 
+    // Capitalize first letter, lowercase the rest
     function titleCase(s) { return s.charAt(0) + s.slice(1).toLowerCase(); }
 
+    // Format ISO date as a readable deadline
     function formatDeadline(iso) {
         var d = new Date(iso);
         var date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
@@ -13,6 +16,7 @@ $(function () {
         return date + ', ' + time;
     }
 
+    // Load this resident's parcels awaiting collection
     APP.api('GET', '/api/parcels/mine?email=' + encodeURIComponent(user.email))
         .done(function (parcels) {
             var $list = $('#parcel-list').empty();

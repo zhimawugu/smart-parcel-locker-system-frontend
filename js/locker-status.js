@@ -14,12 +14,14 @@ $(function () {
     function bucket(status) {
         return status === 'DOOR_OPEN' ? 'OCCUPIED' : status;
     }
+    // Get label and CSS class for a status
     function meta(status) {
         var b = bucket(status);
         return STATUSES.filter(function (s) { return s.key === b; })[0] || { label: status, cls: '' };
     }
     function showError(msg) { $('#lk-msg').text(msg).removeClass('hidden'); }
 
+    // Load the first station then its lockers
     APP.api('GET', '/api/stations')
         .done(function (stations) {
             if (!stations || stations.length === 0) { showError('No locker stations available.'); return; }
@@ -29,6 +31,7 @@ $(function () {
         })
         .fail(showError);
 
+    // Fetch lockers for a station and render them
     function loadLockers(stationId) {
         APP.api('GET', '/api/stations/' + stationId + '/lockers')
             .done(function (lockers) {
@@ -39,6 +42,7 @@ $(function () {
             .fail(showError);
     }
 
+    // Build a single stat tile element
     function statTile(label, value, cls) {
         return $('<div class="col">').append(
             $('<div class="lk-stat ' + cls + '">')
@@ -47,6 +51,7 @@ $(function () {
         );
     }
 
+    // Count lockers by status and render stat tiles
     function renderStats(lockers) {
         var counts = { OCCUPIED: 0, AVAILABLE: 0, RESERVED: 0, OUT_OF_SERVICE: 0 };
         lockers.forEach(function (l) {
@@ -58,6 +63,7 @@ $(function () {
         STATUSES.forEach(function (s) { $row.append(statTile(s.label, counts[s.key], s.cls)); });
     }
 
+    // Render the grid of locker status cards
     function renderGrid(lockers) {
         var $grid = $('#locker-grid').empty();
         lockers.forEach(function (l) {

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- top bar with station selector -->
     <div class="bar">
         <a class="btn btn-light btn-sm left" href="delivery-home.html">‹ Back</a>
         <div class="title">📦 Smart Parcel Locker</div>
@@ -19,6 +20,7 @@
     <div class="page" style="max-width:1040px;">
         <div class="row g-4 align-items-center" id="store-view">
             <div class="col-lg-7">
+                <!-- parcel details and size selection form -->
                 <section id="size-view">
                     <h1 class="h3">Store a Parcel</h1>
                     <p class="text-muted">Step 1 of 2 · Choose the parcel size to assign a locker</p>
@@ -33,6 +35,7 @@
                     <input class="form-control" type="text" id="order-number" placeholder="e.g. 1Z999AA10123456784">
 
                     <label class="form-label mt-3">Parcel size</label>
+                    <!-- parcel size selection grid -->
                     <div class="row g-3" id="size-grid">
                         <div class="col-4">
                             <div class="size-card" data-size="SMALL">
@@ -66,11 +69,13 @@
                 </section>
             </div>
 
+            <!-- on-screen keyboard panel -->
             <div class="col-lg-5" id="kb-panel">
                 <div class="simple-keyboard"></div>
             </div>
         </div>
 
+        <!-- locker-opened confirmation view -->
         <section id="opened-view" class="hidden">
             <div class="card mx-auto" style="max-width:440px;">
                 <div class="card-body text-center">
